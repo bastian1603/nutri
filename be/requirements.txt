@@ -1,0 +1,11 @@
+# api
+fastapi
+uvicorn
+sqlalchemy
+
+# ai
+pandas
+matplotlib
+jupyter
+scikit-learn
+google-generativeai
