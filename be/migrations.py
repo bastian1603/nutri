@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, String, Integer, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.exc import IntegrityError
 
 
@@ -34,7 +34,8 @@ Base.metadata.create_all(engine)
 # ability functions
 def get_user_by_email(email):
     user = session.query(User).filter_by(email=email).first()
-    print(user.name)
+    if user:
+        print(user.name)
     return user
 
 def confirm_action(prompt:str) -> bool:
@@ -97,13 +98,46 @@ def query_tasks():
         print(f"ID: {task.id}\ntitle: {task.title}\nOwner: {task.id}\nDesc: {task.description}")
 
 
+def update_user():
+    email = input("Enter email of the user to update: ")
+    user = get_user_by_email(email=email)
+
+    if not user:
+        print("There is no user with that email")
+        return
+    
+    user.name = input("Enter new username (leave itu blank if you don't want to change username)") or user.name
+    user.email = input("Enter new email (leave itu blank if you don't want to change email)") or user.email
+
+    session.commit()
+
+    print("User updated succesfully")
+
+
+def delete_user():
+    emaiddl = input("Enter email of the user to delete: ")
+    user = get_user_by_email(email)
+
+    if not user:
+        print("There is no user with that email")
+        return
+    
+    session.delete(user)
+    session.commit()
+    print("User deleted succesfully")
+
+# def delete_task():
+
+
 # main ops
 def main() -> None:
     actions = {
         "1": add_user,
         "2": add_task, 
         "3": query_users,
-        "4": query_tasks
+        "4": query_tasks,
+        "5": update_user,
+        "6": delete_user
     }
 
     while True:
