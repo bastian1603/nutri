@@ -11,7 +11,12 @@ const Register = () => {
     }
 
     function submitting(){
-        const body = JSON.stringify({"username": "blablabla"})
+        const body = JSON.stringify({
+            "username": form_data.username,
+            "email": form_data.email,
+            "password": form_data.password,
+            "password_confirmation": form_data.password_confirmation
+        });
 
         fetch("http://127.0.0.1:8000/testing",{
             method: 'POST',
@@ -35,7 +40,7 @@ const Register = () => {
                 id="username"
                 name="username"
                 //   value={formData.name}
-                //   onChange={handleChange}
+                onChange={handle_form_data}
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan nama"
                 />
@@ -50,6 +55,8 @@ const Register = () => {
                 name="email"
                 //   value={formData.email}
                 //   onChange={handleChange}
+                onChange={handle_form_data}
+
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan email"
                 />
@@ -64,6 +71,8 @@ const Register = () => {
                 name="password"
                 //   value={formData.email}
                 //   onChange={handleChange}
+                onChange={handle_form_data}
+
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan password"
                 />
@@ -76,6 +85,8 @@ const Register = () => {
                 type="password"
                 id="password_confirmation"
                 name="password_confirmation"
+                onChange={handle_form_data}
+                
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan password"
                 />
