@@ -3,6 +3,7 @@ from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel
+import re
 
 from app.db import Base, Engine
 # from app.models import User
@@ -79,7 +80,7 @@ def read_item(item_id:int = 10, q: Union[str, None] = None):
     }
 
 @app.post('/register')
-async def testing(body: UserSchema.CreateUser):
+async def testing(body: CreateUser):
     try :
         result = UserController.create(body)
 
@@ -93,11 +94,33 @@ async def testing(body: UserSchema.CreateUser):
             "error": str(e),
         }
     
-@app.post('/token')
-async def login(form: UserSchema.Login):
-    # result = UserController.login(form)
+    
+def LoginForm(body):
+    formatted_body: Login
+    try:
+        formatted_body = Login(body)
+        formatted_body.use_email = True
 
-    result = type(form.identity)
+    except:
+        formatted_body.use_email = False
+
+    
+    return formatted_body
+
+
+@app.post('/token')
+async def login(body: Login):
+    result = UserController.login(body)
+    
+    # valid = re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', body.identity) is not None
+
+    
+    # return {
+    #     "identity": body.identity,
+    #     "valid": valid
+    #     # "is_email_str": is_email_str,
+    #     # "actual_type": actual_type
+    # }
 
     return result
 

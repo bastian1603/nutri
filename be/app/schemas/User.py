@@ -8,5 +8,5 @@ class CreateUser(BaseModel):
     password_confirmation: str
 
 class Login(BaseModel):
-    identity: EmailStr | str
+    identity: str
     password: str
