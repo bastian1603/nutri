@@ -1,2 +1,2 @@
-from .User import CreateUser
-from .DailyConsumption import createDailyConsumption
+from .User import *
+from .DailyConsumption import *

@@ -1,12 +1,12 @@
 from typing import Union, Annotated
-from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends
+from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel
 
 from app.db import Base, Engine
 # from app.models import User
-# from app.schemas import *
+from app.schemas import *
 from app.controllers import *
 
 # auth 
@@ -78,8 +78,8 @@ def read_item(item_id:int = 10, q: Union[str, None] = None):
         "q" : q
     }
 
-@app.post('/testing')
-async def testing(body: CreateUser):
+@app.post('/register')
+async def testing(body: UserSchema.CreateUser):
     try :
         result = UserController.create(body)
 
@@ -93,32 +93,17 @@ async def testing(body: CreateUser):
             "error": str(e),
         }
     
+@app.post('/token')
+async def login(form: UserSchema.Login):
+    # result = UserController.login(form)
+
+    result = type(form.identity)
+
+    return result
+
 
 @app.get('/a')
 async def check():
     return {
         'a': session.query()
     }
-
-# @app.post('/testing')
-# async def testing(username:str = Body(...)):
-#     try:
-#         return {'username': username}
-#     except Exception:
-#         return {'error': 'error'}
-    
-
-class User(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
-
-def decode_token(token):
-    return User (
-        username= token + "fakedecoded", email="john@example", full_name = "John Doe"
-    )
-
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    user = decode_token(token)
-    return user

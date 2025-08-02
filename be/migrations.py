@@ -46,10 +46,11 @@ print("b")
 
 
 temp = session.query(User).filter(User.id == 1).first()
-print(temp.id, temp.username, temp.email, temp.password)
+if temp:
+    print(temp.id, temp.username, temp.email, temp.password)
 
-session.delete(temp)
-session.commit()
+    session.delete(temp)
+    session.commit()
 
 users = session.query(User).all()
 
