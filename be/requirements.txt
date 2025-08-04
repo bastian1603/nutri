@@ -3,6 +3,9 @@ fastapi[standard]
 uvicorn
 sqlalchemy
 alembic
+passlib[bcrypt]
+pyjwt
+bcrypt
 
 # ai
 pandas

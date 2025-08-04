@@ -3,7 +3,7 @@ from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 from pydantic import BaseModel
-import re
+# import re
 
 from app.db import Base, Engine
 # from app.models import User
@@ -24,35 +24,6 @@ Base.metadata.create_all(bind=Engine)
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# fake_db = {
-#     "tim": {
-#         "username": "tim",
-#         "full_name": "Tim Rusica",
-#         "email": "tim@gmail.com",
-#         "hashed_password": "",
-#         "disabled": False
-#     }
-# }
-
-# class Token(BaseModel):
-#     access_token: str
-#     token_type: str
-
-# class TokenData(BaseModel):
-#     username:str | None = None
-
-# class User(BaseModel):
-#     username: str
-#     full_name: str | None = None
-#     email: str | None = None
-#     disabled: bool | None = None
-
-# class UserInDB(User):
-#     hashed_password:str
-
-# pwd_context = CryptContext(schemes=["bcrypt", depreacted="auto"])
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],  # atau ["*"] untuk semua origin
@@ -61,8 +32,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# def verify_password():
-    
 
 @app.get('/')
 def index():
