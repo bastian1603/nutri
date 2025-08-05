@@ -7,6 +7,7 @@ class CreateUser(BaseModel):
     password: str
     password_confirmation: str
 
+
 class Login(BaseModel):
     identity: str
     password: str
