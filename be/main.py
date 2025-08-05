@@ -1,6 +1,7 @@
 from typing import Union, Annotated
 from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
+from handlers.service import get
 
 from pydantic import BaseModel
 # import re
@@ -15,20 +16,26 @@ from app.controllers import *
 # from jose import jwt, JWTError
 # from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+import jwt
+from jwt.exceptions import InvalidTokenError
+import os
+from dotenv import load_dotenv
 
-# SECRET_KEY = "a3f1c749b527e2b87c9c84f87fd645ad74dffdc93ae514fb6db30c8e05cf01b3"
-# ALGORITHM = "HS256"
-# ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+ALGORITHM = os.getenv("JWT_ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
+
+load_dotenv()
 Base.metadata.create_all(bind=Engine)
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # atau ["*"] untuk semua origin
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
-    allow_methods=["*"],  # Bisa diubah ke ['POST', 'GET'] jika mau dibatasi
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 

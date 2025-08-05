@@ -6,6 +6,8 @@ alembic
 passlib[bcrypt]
 pyjwt
 bcrypt
+python-dotenv
+
 
 # ai
 pandas
