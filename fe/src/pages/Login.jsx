@@ -1,18 +1,21 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+    const navigate = useNavigate();
 
     function handle_form_submit(e) {
         e.preventDefault();
         const form = e.target;
 
         const body = JSON.stringify({
-           'identity': form.identity.value,
+           'identifier': form.identity.value,
            'password': form.password.value 
         });
         
 
-        fetch('http://127.0.0.1:8000/token', {
+        fetch('http://127.0.0.1:8000/auth/login', {
             method: "POST",
             body: body,
             headers: {
@@ -20,7 +23,13 @@ const Login = () => {
             }
 
         }).then(response => response.json())
-        .then(response => {console.log(response)});
+        .then(response => {
+            if(response.status){
+            console.log(response);
+            navigate("/profile")
+            localStorage.setItem("token", response.token)
+        }
+    });
     }
 
     return (

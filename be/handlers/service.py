@@ -8,7 +8,7 @@ def get(func, param):
     }
     
     try:
-        result = func(...param)
+        result = func(*param)
         return result
     
     except Exception as e:

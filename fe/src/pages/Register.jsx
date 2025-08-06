@@ -18,7 +18,7 @@ const Register = () => {
             "password_confirmation": form_data.password_confirmation
         });
 
-        fetch("http://127.0.0.1:8000/register",{
+        fetch("http://127.0.0.1:8000/auth/register",{
             method: 'POST',
             body: body,
             headers: {
