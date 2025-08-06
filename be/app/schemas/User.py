@@ -9,5 +9,5 @@ class CreateUser(BaseModel):
 
 
 class Login(BaseModel):
-    identity: str
+    identifier: str
     password: str
