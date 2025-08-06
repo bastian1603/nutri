@@ -1,7 +1,7 @@
 from typing import Union, Annotated
 from fastapi import FastAPI, Body, Query, Path, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
-from handlers.service import get
+from handlers.service import Handlers
 
 from pydantic import BaseModel
 # import re
@@ -22,11 +22,7 @@ import os
 from dotenv import load_dotenv
 
 
-SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-ALGORITHM = os.getenv("JWT_ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
-
-load_dotenv()
+load_dotenv("./.env")
 Base.metadata.create_all(bind=Engine)
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -40,9 +36,14 @@ app.add_middleware(
 )
 
 
+
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+ALGORITHM = os.getenv("JWT_ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES")
+
 @app.get('/')
 def index():
-    return {"Hello": "World"}
+    return {"Hello": SECRET_KEY}
 
 @app.get("/items")
 async def read_items(token: Annotated[str, Depends(oauth2_scheme)]):
