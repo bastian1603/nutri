@@ -4,14 +4,18 @@ from app.models import User
 from app.schemas import User as UserSchema, Token as TokenSchema
 
 from .auth import check_token 
+from fastapi import Depends
+from config import *
 
 @router.get("/")
 def index():
     return {"hell9": "workd"}
 
 @router.post("/get_profile")
-def profile(body: TokenSchema.GetToken):
-    user = check_token(body.access_token)
+def profile(token:str = Depends(oauth2_scheme)):
+
+    
+    user = check_token(token)
     
     return {
         "username": user.username,
