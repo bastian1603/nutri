@@ -18,7 +18,8 @@ const Profile = () => {
             method: "POST",
             body: body,
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(response => response.json())
         .then(response => {
@@ -30,33 +31,19 @@ const Profile = () => {
         })
     }
 
-    // useEffect(() => {
-    //     console.log(localStorage.getItem("token"));
-    //     const body = JSON.stringify({
-    //         "access_token": localStorage.getItem("token"),
-    //         "token_type": "Bearer"
-    //     });
-
-    //     fetch("http://127.0.0.1:8000/user/get_profile", {
-    //         method: "POST",
-    //         body: body,
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     }).then(response => response.json())
-    //     .then(response => {
-    //         console.log(response)
-    //     })
-    // }, [username, email, password]);
-
+    useEffect(() => {
+        get_user();
+    }, []);
 
     return (
         <>
-        <h3>nama: {username}</h3>
-        <h3>email: {email} </h3>
-        <h3>password: {password}</h3>    
-        
-        <button onClick={get_user}>get_user</button>
+            <div className="text-white">
+                <h3>nama: {username}</h3>
+                <h3>email: {email} </h3>
+                <h3>password: {password}</h3>    
+                
+                <button onClick={get_user}>get_user</button>
+            </div>
         </>
     )
 }
