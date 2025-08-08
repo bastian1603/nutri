@@ -3,8 +3,8 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
-    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
-    "node_modules/flowbite/**/*.{js,jsx,ts,tsx}"
+    "node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx,css}",
   ],
   theme: {
     extend: {},
@@ -12,5 +12,6 @@ export default {
   plugins: [
     // require('flowbite/plugin')
   ],
+  darkMode: "media",
 }
 
