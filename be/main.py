@@ -17,12 +17,12 @@ import jwt
 from jwt.exceptions import InvalidTokenError
 
 
-from app.routes import user, auth
+from app.routes import user, auth, daily_consumption
 
 Base.metadata.create_all(bind=Engine)
 
 app = FastAPI()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,6 +37,7 @@ app.add_middleware(
 
 app.include_router(user.router, prefix="/user", tags=["user"])
 app.include_router(auth.router, prefix="/auth", tags=["token"])
+app.include_router(daily_consumption.router, prefix="/daily_consumption", tags=["daily_consumption"])
 
 # @app.get('/')
 # def index():
