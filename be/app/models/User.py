@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer, Date, Float, Boolean
 from sqlalchemy.orm import relationship, Mapped
 
 from app.db import Base
-from app.models.DailyConsumption import DailyConsumption
+from app.models import DailyConsumption
 
 class User(Base):
     __tablename__ = "users"
@@ -14,5 +14,5 @@ class User(Base):
     # weight = Column(Float, nullable=False)
     # height = Column(Float, nullable=False)
 
-    daily_consumptions: Mapped[list["DailyConsumption"]] = relationship("DailyConsumption", back_populates="user")
+    daily_consumptions: Mapped[list[DailyConsumption]] = relationship("DailyConsumption", back_populates="user")
     
