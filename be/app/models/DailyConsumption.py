@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float, DateTime
+from sqlalchemy import Column, String, Integer, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship, Mapped
 
 from app.db import Base
@@ -11,7 +11,9 @@ class DailyConsumption(Base):
     calories = Column(Float, nullable=False)
     datetime = Column(DateTime, nullable=False)
 
-    user: Mapped[User] = relationship("User", back_populates="daily_consumptions", cascade="all, delete-orphan")
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+
+    user: Mapped[User] = relationship("User", back_populates="daily_consumptions")
 
     def __repr__(self):
         return f"Address(id={self.id!r}, username={self.username!r})"
