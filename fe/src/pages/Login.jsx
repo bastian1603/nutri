@@ -26,7 +26,7 @@ const Login = () => {
         .then(response => {
             if(response.status){
             console.log(response);
-            navigate("/profile")
+            navigate("/home")
             localStorage.setItem("token", response.token)
         }
     });

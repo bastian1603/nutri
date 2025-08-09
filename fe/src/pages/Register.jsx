@@ -31,7 +31,7 @@ const Register = () => {
         .then(response => {
             if (response.status){
                 localStorage.setItem('token', response.token)
-                navigate('/profile')
+                navigate('/home')
             }
         });
     }
