@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
-
+from config import *
 
 
 router = APIRouter()

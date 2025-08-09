@@ -16,6 +16,8 @@ def profile(token:str = Depends(oauth2_scheme)):
 
     
     user = check_token(token)
+
+    
     
     return {
         "username": user.username,

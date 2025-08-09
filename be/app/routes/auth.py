@@ -17,6 +17,10 @@ from sqlalchemy import or_
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 
+@router.get("/")
+async def testing():
+    return {"hello": "world"}
+
 @router.post("/register")
 def register(user: UserSchema.CreateUser):
     try:
