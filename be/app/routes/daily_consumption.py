@@ -9,6 +9,7 @@ from app.models import DailyConsumption
 
 @router.get("/")
 async def index(keyword: str = "", token: str = Depends(oauth2_scheme)):
+<<<<<<< HEAD
     user = check_token(token)
     result = session.query(DailyConsumption).filter(DailyConsumption.user_id == user.id).all()
 
@@ -20,6 +21,14 @@ async def index(keyword: str = "", token: str = Depends(oauth2_scheme)):
     return {
         "status": True,
         "results": result
+=======
+    user = check_token
+    result = session.query(DailyConsumption).filter(DailyConsumption.user == user.id).get()
+
+    return {
+        status: True,
+        result:result
+>>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
     }
 
     # try:
@@ -40,6 +49,10 @@ async def create(body: DayCompSchema.createDailyConsumption, token = Depends(oau
         calories= body.calories,
         user_id= body.user_id,
         datetime= body.datetime
+<<<<<<< HEAD
+=======
+
+>>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
     ))
     session.commit()
 
@@ -49,6 +62,7 @@ async def create(body: DayCompSchema.createDailyConsumption, token = Depends(oau
     }
 
 
+<<<<<<< HEAD
 @router.patch("/{id}")
 async def update(id: int, body: DayCompSchema.createDailyConsumption, token=Depends(oauth2_scheme)):
     user = check_token(token)
@@ -76,4 +90,14 @@ async def delete(id: int, token=Depends(oauth2_scheme)):
         "status": True,
         "message": "Berhasil Dihapus"
     }
+=======
+@router.patch("/")
+async def update():
+    pass
+
+
+@router.delete("/")
+async def delete():
+    pass
+>>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
 
