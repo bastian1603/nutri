@@ -7,15 +7,17 @@ from .auth import check_token
 from fastapi import Depends
 from config import *
 
-@router.get("/")
-def index():
-    return {"hell9": "workd"}
+# @router.get("/")
+# def index():
+#     return {"hell9": "workd"}
 
 @router.post("/get_profile")
 def profile(token:str = Depends(oauth2_scheme)):
 
     
     user = check_token(token)
+
+    
     
     return {
         "username": user.username,
