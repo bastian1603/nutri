@@ -11,8 +11,28 @@ const Home = () => {
     const [ date_picked, set_date_picked ] = useState((new Date().toDateString()));
     const [ food_data, set_food_data ] = useState({
        food_name: "asdasdasd",
-       food_calorie: "" 
+       calories: "" 
     });
+
+    async function add_food(){
+        const body = JSON.stringify({
+            food_name: food_data.food_name, 
+            calories: food_data.calories,
+            datetime: (new Date()).toISOString().slice(0, 19).replace('T', ' ')
+        });
+        
+        await fetch("http://127.0.0.1:8000/daily_consumption", {
+            method: "POST",
+            body: body,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(response => response.json())
+        .then(response => {
+            console.log(response)
+        });
+    }
 
     function update_food_data(e){
         const {name, value} = e.target;
@@ -21,10 +41,31 @@ const Home = () => {
         set_food_data(prev => ({...prev, [name]: value}))
     }
     
-    useEffect(()=> {
-        // function untuk melihat history makan
-    }, [date_picked]);
+    function refresh_display(items){
+        console.log(items)
+        const container = document.getElementById('daily_food');
+        container.innerHTML = 'asdasdasdasdasd';
+        const a = items.forEach(item => `a`)
+        console.log(a[0]);
+    }
 
+    async function get_day_comp(){
+        await fetch('http://127.0.0.1:8000/daily_consumption/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }).then(response => response.json())
+        .then(response => {
+            refresh_display(response.results)
+        });
+    }
+
+    useEffect(() => {
+        get_day_comp();
+
+
+    }, [date_picked]);
 
 
     return (
@@ -36,7 +77,7 @@ const Home = () => {
                     <br />
                     {food_data.food_name}
                     <br />
-                    {food_data.food_calorie}
+                    {food_data.calories}
                 </div>
 
                 <DayPicker 
@@ -55,11 +96,17 @@ const Home = () => {
                     <h1 className="text-lg pl-2">Add Food</h1>
 
                     <InputFood className="my-2" id="food_name" name="food_name" placeholder="Sudah makan apa anda hari ini" input_change={update_food_data}/>
-                    <InputFood className="my-2" id="food_calorie" name="food_calorie" placeholder="Berapa Jumlah kalori makanan tersebut?" input_change={update_food_data}/>
+                    <InputFood className="my-2" id="calories" name="calories" placeholder="Berapa Jumlah kalori makanan tersebut?" input_change={update_food_data}/>
                     
-                    <button className="px-2 rounded-md border border-teal-500 bg-teal-400 text-white" onClick={() => {}}>Add</button>
+                    <button className="px-2 rounded-md border border-teal-500 bg-teal-400 text-white" onClick={add_food}>Add</button>
 
                 </div>
+
+                <br />
+                <br />
+                <ul id="daily_food">
+
+                </ul>
             </Layout>
         </>
     );
