@@ -44,12 +44,13 @@ const Home = () => {
     function refresh_display(items){
         console.log(items)
         const container = document.getElementById('daily_food');
-        container.innerHTML = 'asdasdasdasdasd';
-        const a = items.forEach(item => `a`)
-        console.log(a[0]);
+        
+        container.innerHTML = items.map(item => `<li>${item.food_name}</li>`);
+        
     }
 
     async function get_day_comp(){
+
         await fetch('http://127.0.0.1:8000/daily_consumption/', {
             headers: {
                 'Content-Type': 'application/json',
@@ -59,11 +60,15 @@ const Home = () => {
         .then(response => {
             refresh_display(response.results)
         });
+
     }
 
     useEffect(() => {
+        console.log('dsfsfd')
+
         get_day_comp();
 
+        console.log('asdasd')
 
     }, [date_picked]);
 

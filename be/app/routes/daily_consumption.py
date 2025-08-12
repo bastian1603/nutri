@@ -4,14 +4,19 @@ from app.db import session
 from app.routes import daily_consumption
 from app.schemas import DailyConsumption as DayCompSchema
 from app.models import DailyConsumption
+from datetime import datetime, timedelta
 
 
-
-@router.get("/")
-async def index(keyword: str = "", token: str = Depends(oauth2_scheme)):
-<<<<<<< HEAD
+@router.get("/{time}")
+async def index(time: int = 0, token: str = Depends(oauth2_scheme)):
+    time /= 1000
     user = check_token(token)
-    result = session.query(DailyConsumption).filter(DailyConsumption.user_id == user.id).all()
+    day1 = datetime.fromtimestamp(time)
+    day2 = datetime.fromtimestamp(time + 86400)
+    day1 = str(day1)
+    day2 = str(day2)
+
+    result = session.query(DailyConsumption).filter(DailyConsumption.user_id == user.id).filter(DailyConsumption.datetime >= day1).filter(DailyConsumption.datetime < day2).all()
 
     a = None
 
@@ -21,14 +26,6 @@ async def index(keyword: str = "", token: str = Depends(oauth2_scheme)):
     return {
         "status": True,
         "results": result
-=======
-    user = check_token
-    result = session.query(DailyConsumption).filter(DailyConsumption.user == user.id).get()
-
-    return {
-        status: True,
-        result:result
->>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
     }
 
     # try:
@@ -48,11 +45,7 @@ async def create(body: DayCompSchema.createDailyConsumption, token = Depends(oau
         food_name= body.food_name,
         calories= body.calories,
         user_id= body.user_id,
-        datetime= body.datetime
-<<<<<<< HEAD
-=======
-
->>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
+        datetime= datetime.now()
     ))
     session.commit()
 
@@ -62,11 +55,11 @@ async def create(body: DayCompSchema.createDailyConsumption, token = Depends(oau
     }
 
 
-<<<<<<< HEAD
-@router.patch("/{id}")
-async def update(id: int, body: DayCompSchema.createDailyConsumption, token=Depends(oauth2_scheme)):
+@router.put("/{id}")
+async def update(id: int, body:DayCompSchema.update_DailyConsumption, token=Depends(oauth2_scheme)):
+
     user = check_token(token)
-    item = session.query(DailyConsumption).filter(DailyConsumption.id == id).first()
+    item = user.daily_consumptions.filter(DailyConsumption.id == id).first()
 
     item.food_name = body.food_name
     item.calories = body.calories
@@ -90,14 +83,4 @@ async def delete(id: int, token=Depends(oauth2_scheme)):
         "status": True,
         "message": "Berhasil Dihapus"
     }
-=======
-@router.patch("/")
-async def update():
-    pass
-
-
-@router.delete("/")
-async def delete():
-    pass
->>>>>>> a55422e305842788e8b44a12f6ccc8ab0564c3b7
 
