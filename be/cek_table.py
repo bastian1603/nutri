@@ -28,7 +28,7 @@ table_name = "users"
 datas = session.query(table).all()
 
 for data in datas:
-    print(data.food_name, data.user_id, data.calories)
+    print(data.food_name, data.user_id, data.calories, data.id)
 
 
 
