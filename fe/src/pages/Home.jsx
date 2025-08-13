@@ -126,8 +126,9 @@ const Home = () => {
                     {food_data.calories}
                 </div>
 
-                <DayPicker 
-                    
+                <div className="w-[320px]">
+                    <DayPicker 
+                    // className="h-sm"
                     animate
                     mode="single"
                     selected={date_picked}
@@ -146,6 +147,8 @@ const Home = () => {
                     
                 </DayPicker>
 
+                </div>
+                
                 <div className="max-w-md border rounded-sm ring ring-teal-400 p-2 ">   
                     <h1 className="text-lg pl-2">Add Food</h1>
 
