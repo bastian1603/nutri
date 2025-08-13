@@ -1,8 +1,5 @@
-from sqlalchemy import Column, String, Integer, Date, Float, Boolean
-from sqlalchemy.orm import relationship, Mapped
-
-from app.db import Base
-from app.models import DailyConsumption
+from app.models.model import *
+from app.models import DailyConsumption, WeightHistory
 
 class User(Base):
     __tablename__ = "users"
@@ -15,4 +12,4 @@ class User(Base):
     # height = Column(Float, nullable=True)
 
     daily_consumptions: Mapped[list[DailyConsumption]] = relationship("DailyConsumption", back_populates="user", cascade="all, delete-orphan")
-    
+    weight_histories: Mapped[list[WeightHistory]] = relationship("WeightHistory", back_populates="user", cascade="all, delete-orphan")
