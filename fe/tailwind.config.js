@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: false,
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -12,6 +13,7 @@ export default {
   plugins: [
     // require('flowbite/plugin')
   ],
-  darkMode: "media",
+  // darkMode: "media",
+
 }
 

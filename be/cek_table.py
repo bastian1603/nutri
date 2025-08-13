@@ -15,21 +15,21 @@ for table in tables:
 
     print("\n")
 
-table = DailyConsumption
-table_name = "users"
+# table = DailyConsumption
+# table_name = "users"
 
-# Lihat kolom pada tabel tertentu
-# columns = inspector.get_columns(table_name)
-# for column in columns:
-#     print(column['name'], column['type'])
-
-
-# lihat isi table
-datas = session.query(table).all()
-
-for data in datas:
-    print(data.food_name, data.user_id, data.calories, data.id)
+# # Lihat kolom pada tabel tertentu
+# # columns = inspector.get_columns(table_name)
+# # for column in columns:
+# #     print(column['name'], column['type'])
 
 
+# # lihat isi table
+# datas = session.query(table).all()
 
-user = session.query(User).filter(User.id == 9)
+# for data in datas:
+#     print(data.food_name, data.user_id, data.calories, data.id)
+
+
+
+# user = session.query(User).filter(User.id == 9)
