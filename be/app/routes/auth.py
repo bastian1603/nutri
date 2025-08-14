@@ -1,4 +1,4 @@
-from .route import *
+from app.routes.route import *
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta, datetime
 
@@ -7,7 +7,6 @@ import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr 
 
-from app.db import session
 from app.models import User
 from app.schemas import User as UserSchema
 from re import match
@@ -24,50 +23,48 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 @router.post("/register")
 def register(user: UserSchema.CreateUser):
     try:
-        user_exists = session.query(User).filter(or_(User.username == user.username, User.email == user.email)).first()
 
-        if user_exists:
-            e = {}
-
-            if user_exists.username == user.username:
-                e.update({"username": 1})
-            if user_exists.email == user.email:
-                e.update({"email": 1})
-
-            raise Exception(e)            
-            # if user_exists.username == user.username and user_exists.email == user.email:
+        # username_used = session.query(User).filter(User.username == user.username).first()
+        # email_used = session.query(User).filter(User.email == user.email).first()
+        
+        # if username_used and email_used:
+        #     return {
                 
-            #     raise Exception("Username dan Email sudah digunakan")
-            # elif user_exists.username == user.username:
-            #     raise Exception("Username sudah digunakan")
-            # else:
-            #     raise Exception("Email sudah digunakan")
+        #     }
+
+
 
         if(user.password != user.password_confirmation):
             raise Exception("password dan konfirmasi password tidak sesuai")
         
         hashed = pwd_context.hash(user.password)
 
+
+
         session.add(User(
             username=user.username,
             email=user.email,
             password=hashed
         ))
+
+        
         session.commit()
         
+        return {
+            "message": hashed
+        }
+        
+
         return {
             "status": True,
             "message": "Akun berhasil dibuat"
         }
 
     except Exception as e:
-        (arg, ) = e.args
-        
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={
-            "username": str(arg["username"]),
-            "email": str(arg["email"])
-        })
-    
+        return {
+            "status": False,
+            "message": e
+        }
 
 @router.post("/login")
 def login(input: UserSchema.Login):

@@ -1,7 +1,5 @@
 from app.routes.route import *
 from app.routes.auth import check_token
-from app.db import session
-from app.routes import daily_consumption
 from app.schemas import DailyConsumption as DayCompSchema
 from app.models import DailyConsumption
 from datetime import datetime, timedelta

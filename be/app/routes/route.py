@@ -2,6 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Annotated
 from config import *
 
+from app.db import session
+
+# from .auth import check_token 
+from fastapi import Depends
+from config import *
 
 router = APIRouter()
 

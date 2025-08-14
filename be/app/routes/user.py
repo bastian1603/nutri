@@ -1,11 +1,7 @@
-from app.routes.route import router
-from app.db import session
+from app.routes.route import *
 from app.models import User
 from app.schemas import User as UserSchema, Token as TokenSchema
-
 from .auth import check_token 
-from fastapi import Depends
-from config import *
 
 # @router.get("/")
 # def index():
