@@ -52,8 +52,8 @@ const Register = () => {
             }
         }).then(response => response.json())
         .then(response => {
+            console.log(response); 
             if(response.status){
-                console.log(response); 
                 login()
             }
             return response;
